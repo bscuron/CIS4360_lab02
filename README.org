@@ -1,1 +1,39 @@
 * Lab 2 - Containers
+
+** Hello
+
+First, I made sure that Docker was installed on my cloud instance:
+
+[[./images/docker_installed.png]]
+
+Next, I ran the command to run a hello world Docker container:
+
+[[./images/docker_hello_world.png]]
+
+The image was not installed on my cloud machine, so it was pulled from a remote registry known as the "Docker Hub."
+
+I then ran a command that lists my current Docker images:
+
+[[./images/docker_images.png]]
+
+As you can see from the output above, the image that was pulled from the Docker Hub is 16 months old, has the tag latest (which means it is the latest version), has the Image ID "feb5d9fea6a5", and is 13.3 kilobytes (kB) in size. I was interested to see where exactly the image is written to the cloud machine's drive. I did some research and found that the images are stored in the directory "/var/lib/docker." Unfortunately, I could not access that directory due to lack of permission on the cloud console.
+
+Now, I will try to run the same hello world container. This time, it should not need to pull from the Docker Hub, since the container is stored locally:
+
+[[./images/docker_hello_world2.png]]
+
+As you can see, Docker was able to find the image locally, without having to pull it down remotely from the Docker Hub registry.
+
+To check if there are Docker containers currently running, I ran the following command:
+
+[[./images/docker_ps.png]]
+
+Since there are no running containers currently, no containers are listed in the output. Now, I want to check all Docker containers, not just the running containers. This output should show the previous "hello-world" containers that I ran:
+
+[[./images/docker_ps2.png]]
+
+I was interested to see what exactly the -a flag did when appended to the docker ps command. To do this, I first ran the "docker help" command. At the bottom of this command, there was a message about how to learn more about specific docker commands: "Run 'docker COMMAND --help' for more information on a command." Since I wanted to learn more about the docker ps command I typed: "docker ps --help":
+
+[[./images/docker_ps_help.png]]
+
+After running this command, more information is printed about the docker ps command. Specifically, I was able to figure out what exactly the -a flag was doing. The -a flag is used to specify: "Show all containers (default shows just running)."
