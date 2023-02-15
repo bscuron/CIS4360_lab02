@@ -133,3 +133,47 @@ The output of this command does not fit onto one screenshot. The output is forma
 [[./images/docker_inspect_format.png]]
 
 In the command above, I inspected a specific field to obtain the IP address from the JSON output (172.18.0.3).
+
+** Publish
+
+Lastly, we will publish our image to the google container registry. I used my project ID (summer-topic-376413) and configured it to use my newer node application created before:
+
+[[./images/list_and_tag.png]]
+
+I then checked to make sure that my newly tagged image was visible using docker images:
+
+[[./images/docker_images3.png]]
+
+Next, I finally tried to publish the image:
+
+[[./images/publish_fail.png]]
+
+My first push initially failed, since I did not have the container registry service enabled. After enabling that service within the GCP, I was able to publish the container:
+
+[[./images/published.png]]
+
+After publishing, my container was visible within the Google Cloud Container Registry:
+
+[[./images/container_registry.png]]
+
+Next, it was time to cleanup the containers on our local cloud console:
+
+[[./images/clean.png]]
+
+Next, I realize I accidentally did not delete my local image tagged with the gcr prefix, so I deleted it:
+
+[[./images/delete_for_real.png]]
+
+After running the commands above, I no longer having any images locally hosted on my cloud machine:
+
+[[./images/clean_for_real.png]]
+
+Next, I will pull the image located in the Google Cloud Container Registry from earlier:
+
+[[./images/docker_pull.png]]
+
+I then ran the registry pulled container:
+
+[[./images/final_run.png]]
+
+I was able to see the correct output from the container pulled from the gcr registry. One thing that was confusing to me was that when I pulled the image, it said that certain elements already exist. This is confusing to me because I deleted all of the images stored locally and made sure using the docker images command. I was thinking it might have to do with caching, but I am not sure.
