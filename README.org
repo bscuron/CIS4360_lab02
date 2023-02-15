@@ -37,3 +37,29 @@ I was interested to see what exactly the -a flag did when appended to the docker
 [[./images/docker_ps_help.png]]
 
 After running this command, more information is printed about the docker ps command. Specifically, I was able to figure out what exactly the -a flag was doing. The -a flag is used to specify: "Show all containers (default shows just running)."
+
+** Build
+
+In the build section, we are going to create a Docker image. The first thing we will do is create a directory and change our current directory to that newly created directory:
+
+[[./images/cd.png]]
+
+The two ampersands between the mkdir command and cd command is a way to run the second command only if the first command succeeded.
+
+Next, a Dockerfile is created. Dockerfiles are used to specify how to build the image we want to create. In the Dockerfile that we create, the first line will specify the Node version that we are using (version 6). The next line will set the working directory to "/app." Next, we will copy the contents of the current directory into the working directory "/app." After that, we will expose port 80 to others. Lastly, we will specify the command to run when the container is run. In this case, we specify the command to run is "node app.js." The Dockerfile can be seen below:
+
+[[./images/dockerfile.png]]
+
+Next, I created a node HTTP server that will listen on port 80 and return "Hello World" to users. To do this I created a file named app.js and inserted the following JavaScript code to setup the web server:
+
+[[./images/web_server.png]]
+
+Now we are ready to build the Docker image. To do so, I ran the following command:
+
+[[./images/build.png]]
+
+As you can see, the image was built successfully. Just to double check, I ran the command below:
+
+[[./images/docker_images2.png]]
+
+In the output of the command above, our node-app image that was just created is visible.
