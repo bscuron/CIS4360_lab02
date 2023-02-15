@@ -32,7 +32,7 @@ Since there are no running containers currently, no containers are listed in the
 
 [[./images/docker_ps2.png]]
 
-I was interested to see what exactly the -a flag did when appended to the docker ps command. To do this, I first ran the "docker help" command. At the bottom of this command, there was a message about how to learn more about specific docker commands: "Run 'docker COMMAND --help' for more information on a command." Since I wanted to learn more about the docker ps command I typed: "docker ps --help":
+I was interested to see what exactly the -a flag did when appended to the docker ps command. To do this, I first ran the "docker help" command. At the bottom of this command, there was a message about how to learn more about specific Docker commands: "Run 'docker COMMAND --help' for more information on a command." Since I wanted to learn more about the docker ps command I typed: "docker ps --help":
 
 [[./images/docker_ps_help.png]]
 
@@ -63,3 +63,49 @@ As you can see, the image was built successfully. Just to double check, I ran th
 [[./images/docker_images2.png]]
 
 In the output of the command above, our node-app image that was just created is visible.
+
+** Run
+
+Now that we have successfully built the Docker image, it is time to run it. Remember, the web server will run on port 80.
+
+[[./images/docker_run.png]]
+
+The web server is now running on port 80. The 0.0.0.0 IP address means all IPv4 addresses on the local machine.
+
+Now to test if I can connect to the web server, I ran the curl command in another console instance:
+
+[[./images/docker_output.png]]
+
+After connecting to our web server that we created, I received the Hello World message that we were expecting.
+
+Next, I ran the following command to stop and delete the container that we created:
+
+[[./images/docker_stop_rm.png]]
+
+Now, I started the container again, but this time I ran it as a background process and used docker ps to check that it was running in the background:
+
+[[./images/docker_run_bg_ps.png]]
+
+To check the output of a container running in the background, we can use the docker logs command. To see the logs of a specific container, we pass the container id to the docker logs command:
+
+[[./images/docker_logs.png]]
+
+As you can see from the output of Docker logs, the container running our web server is running on port 80 just as expected.
+
+Now, I will change the text "Hello World" in our application to some other text. To do this, I used the vim text editor. First, I opened our app.js file in vim. Next, I searched for the text "Hello" by pressing '/' and continued to spell out Hello. Next, I pressed 'ct\' to delete until the '\' character and get placed in insert mode. I then typed my new text, "Hi Class". I then pressed escape to return to normal mode, and then pressed ':wq' to write and quit. Below is a screenshot of my updated app.js file inside of vim:
+
+[[./images/vim.png]]
+
+I now rebuild the updated image with a new tag (0.2):
+
+[[./images/build2.png]]
+
+It was built successfully. I then ran the newly created container and checked that it was running alongside the old container:
+
+[[./images/docker_containers_running.png]]
+
+As you can see from the screenshot above, both of our web applications are running. I then tested the newly created container to make sure that the output matches the new text that I added to app.js, while the old container still shows Hello World:
+
+[[./images/docker_containers_output.png]]
+
+I think this is really useful how we can have two containers running at the same time, listening on different ports. It was also very easy to send each process to run in the background, while still being able to easily interact with them. The setup for these containers was also very trivial and it was easy to get up and going in a short amount of time.
