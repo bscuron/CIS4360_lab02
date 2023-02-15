@@ -109,3 +109,27 @@ As you can see from the screenshot above, both of our web applications are runni
 [[./images/docker_containers_output.png]]
 
 I think this is really useful how we can have two containers running at the same time, listening on different ports. It was also very easy to send each process to run in the background, while still being able to easily interact with them. The setup for these containers was also very trivial and it was easy to get up and going in a short amount of time.
+
+** Debug
+
+In this section, I try to familiarize myself with debugging Docker containers. One useful command is the docker logs command that we used previously:
+
+[[./images/docker_logs2.png]]
+
+From the output above, we can tell that our newer web server is running on port 80.
+
+Sometimes it may be useful to create an interactive Bash shell for a Docker container. To do this, I ran the following command:
+
+[[./images/docker_bash.png]]
+
+This is useful for when you need to run a series of commands in a Docker container. This interactive shell allows you to easily navigate within the Docker container itself.
+
+Next, I used the docker inspect command to obtain low-level information on my specific Docker container:
+
+[[./images/docker_inspect.png]]
+
+The output of this command does not fit onto one screenshot. The output is formatted in JSON. To inspect a specific field from the output, we can set the format flag:
+
+[[./images/docker_inspect_format.png]]
+
+In the command above, I inspected a specific field to obtain the IP address from the JSON output (172.18.0.3).
